@@ -6,3 +6,6 @@ Supported by fimrmware versions:<br/>
 Requires ControlStudio 3.0.0 or newer<br/>
 Uses TCP/IP ports 4001, 4003, 4004 and 4005 instead of legacy 5001, 5003, 5004 and 5005<br/>
 Support of RBOOTP is discontinued<br/>
+
+[Example1 Documentation]motionAPI64/Examples/example1/DemoMCCpp/DemoMCCpp/html/index.html
+      
