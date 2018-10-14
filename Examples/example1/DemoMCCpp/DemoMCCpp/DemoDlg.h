@@ -3,7 +3,6 @@
 //
 
 #pragma once
-#pragma comment(lib, "Kmapi.lib")
 #include "KMApi.h"
 
 // CDemoDlg dialog
