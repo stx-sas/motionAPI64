@@ -1,0 +1,35 @@
+﻿<Window x:Class="testnet.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:testnet"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="587" Width="523">
+    <Grid>
+        <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="424,31,0,0" VerticalAlignment="Top" Width="76" Click="btnConnect_Click" TabIndex="2"/>
+        <Label x:Name="label" Content="IP:" HorizontalAlignment="Left" Margin="49,25,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1" Content="Port:" HorizontalAlignment="Left" Margin="240,25,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button" Content="Execute" HorizontalAlignment="Left" Margin="424,116,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Height="22" Margin="79,116,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="335" TabIndex="0"/>
+        <Button x:Name="btnSend" Content="Send" HorizontalAlignment="Left" Margin="424,149,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.48,1.983" Click="btnSend_Click"/>
+        <Grid>
+            <Button x:Name="btnConnect1" Content="Connect" HorizontalAlignment="Left" Margin="424,31,0,0" VerticalAlignment="Top" Width="76" Click="btnConnect_Click" TabIndex="2"/>
+            <TextBox x:Name="edtIP" HorizontalAlignment="Left" Height="22" Margin="30,29,0,0" TextWrapping="Wrap" Text="10.0.0.15" VerticalAlignment="Top" Width="137" TabIndex="0"/>
+            <TextBox x:Name="edtPort" HorizontalAlignment="Left" Height="22" Margin="226,29,0,0" TextWrapping="Wrap" Text="4001" VerticalAlignment="Top" Width="120" TabIndex="1"/>
+            <Label x:Name="label2" Content="IP:" HorizontalAlignment="Left" Margin="9,25,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="label3" Content="Port:" HorizontalAlignment="Left" Margin="193,25,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="btnExec" Content="Execute" HorizontalAlignment="Left" Margin="424,116,0,0" VerticalAlignment="Top" Width="75" Click="btnExec_Click"/>
+            <TextBox x:Name="edtCommand" HorizontalAlignment="Left" Height="22" Margin="8,116,0,0" TextWrapping="Wrap" Text="?ver" VerticalAlignment="Top" Width="406" TabIndex="0"/>
+            <Button x:Name="btnAuthenticate" Content="Authenticate" HorizontalAlignment="Left" Margin="316,88,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.48,1.983" Click="btnAuthenticate_Click"/>
+            <Button x:Name="btnLastError" Content="Get Last Error" HorizontalAlignment="Left" Margin="401,88,0,0" VerticalAlignment="Top" Width="98" RenderTransformOrigin="0.48,1.983" Click="btnLastError_Click" />
+            <TextBox x:Name="edtlog" HorizontalAlignment="Left" Height="334" Margin="7,196,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="492" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
+            <Button x:Name="btnDetect" Content="Detect Devices" HorizontalAlignment="Left" Margin="8,77,0,0" VerticalAlignment="Top" Width="111" Click="btnDetect_Click"/>
+            <Button x:Name="btnUpload" Content="Upload File..." HorizontalAlignment="Left" Margin="12,145,0,0" VerticalAlignment="Top" Width="87" Click="btnUpload_Click"/>
+            <Button x:Name="btnClear" Content="Clear List" HorizontalAlignment="Left" Margin="423,536,0,0" VerticalAlignment="Top" Width="75" Click="btnClear_Click"/>
+            <Button x:Name="btnDisconnect" Content="Disconnect" HorizontalAlignment="Left" Margin="424,62,0,0" VerticalAlignment="Top" Width="76" Click="btnDisconnect_Click" TabIndex="2"/>
+
+        </Grid>
+
+    </Grid>
+</Window>
