@@ -29,7 +29,7 @@ Motion API provides following services:
 |--|--|
 |Create API instance  |  [KMNewKMAPI](https://cdn.rawgit.com/stx-sas/motionAPI64/dbfc2a5d/Examples/example1/DemoMCCpp/DemoMCCpp/html/_k_m_api_8h.html#ace4118c6ba20659c52106507061756cb) |
 |Connect to controller|[Connect](https://cdn.rawgit.com/stx-sas/motionAPI64/dbfc2a5d/Examples/example1/DemoMCCpp/DemoMCCpp/html/_k_m_api_8h.html#ad165eca24e7f8c8dba9277ab9bd5ffdc)
-|Execute command|[SendCommand](https://cdn.rawgit.com/stx-sas/motionAPI64/dbfc2a5d/Examples/example1/DemoMCCpp/DemoMCCpp/html/_k_m_api_8h.html#a00dff298d0ce9b95e17d10faf9703a34)
+|Execute command|[ExecCommand](https://cdn.rawgit.com/stx-sas/motionAPI64/dbfc2a5d/Examples/example1/DemoMCCpp/DemoMCCpp/html/_k_m_api_8h.html#a62116030d92671325976b45c9b93a14b)
 |Disconnect and free resources|[MCFreeKMApi](https://cdn.rawgit.com/stx-sas/motionAPI64/dbfc2a5d/Examples/example1/DemoMCCpp/DemoMCCpp/html/_k_m_api_8h.html#a3ddb56384a6d0d3f4c21a3669bff6333)
 # Handing asynchronous messages and Error messages
 |  |  |
