@@ -306,10 +306,10 @@ namespace testnet
                 case NativeMethods.FrameTypeEnum.ASYNC_FRAME:
                 case NativeMethods.FrameTypeEnum.ASYNC2_FRAME:
                 case NativeMethods.FrameTypeEnum.ASYNC_OTHER:
-                    AddToLogTextBox(string.Format("ASYNC: {0}\n", message));
+                    AsyncAddToLog(string.Format("ASYNC: {0}\n", message));
                     break;
                 case NativeMethods.FrameTypeEnum.STATE_FRAME:
-                    AddToLogTextBox(string.Format("ASYNC STATE: {0}\n", message));
+                    AsyncAddToLog(string.Format("ASYNC STATE: {0}\n", message));
                     break;
                 default:
                     break;
@@ -389,7 +389,11 @@ namespace testnet
                     builder += 13;
                     string ip = Marshal.PtrToStringAnsi(builder);
                     if (ip == "")
+                    {
+                        AddToLogTextBox("End of device list\n");
                         break;
+                    }
+                        
                     builder += 17;
                     string serialNumber = Marshal.PtrToStringAnsi(builder);
                     builder += 34;
@@ -437,7 +441,7 @@ namespace testnet
             // just drop old  one
             if (kmapi != IntPtr.Zero)
                 NativeMethods.MCFreeKMApi(kmapi);
-            //kmapi = NativeMethods.KMNewKMAPI();
+            kmapi = NativeMethods.KMNewKMAPI();
         }
 
         // inner error prccessing method
@@ -466,7 +470,10 @@ namespace testnet
             return false;
         }
 
-
+        private void AsyncAddToLog(string msg)
+        {
+            Dispatcher.BeginInvoke(new Action(() => AddToLogTextBox(msg)));
+        }
         private void AddToLogTextBox(string msg)
         {
             edtlog.Text += msg;
