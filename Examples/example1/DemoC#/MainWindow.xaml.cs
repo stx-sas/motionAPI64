@@ -6,6 +6,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
+using System.Threading;
 /*! \brief namespace of the application*/
 namespace testnet
 {
@@ -234,6 +235,12 @@ namespace testnet
         public MainWindow()
         {
             InitializeComponent();
+
+
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            string productVersion = assembly.GetName().Version.ToString();
+            lblProgVer.Content = "Version: " + productVersion;
+
 
             // initalize KMAPI
             // you must load the KMAPI.dll in order to call methods
@@ -479,7 +486,47 @@ namespace testnet
             edtlog.Text += msg;
         }
 
+        int InstenceCounter = 1;
+        private void btnRunThread_Click(object sender, RoutedEventArgs e)
+        {
+            bool sts = runInstenceInThread(InstenceCounter++);
+        }
 
+        private bool runInstenceInThread(int idx)
+        {
+            ParametersObject parametersObject = new ParametersObject(kmapi,idx);
+
+            Thread  InstenceThread = new Thread (showInstencThread);
+            InstenceThread.Name = "Instence-" + idx;
+            InstenceThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+            InstenceThread.IsBackground = true;
+            InstenceThread.SetApartmentState(ApartmentState.STA);
+            InstenceThread.Start(parametersObject);
+            return true;
+        }
+
+        private void showInstencThread(Object paramsObj)
+        {
+            
+            ParametersObject parametersObject = null; 
+            try { parametersObject = (ParametersObject)paramsObj; } catch { }
+
+            InstenceWindow iWindow = new InstenceWindow(parametersObject);
+            iWindow.ShowDialog();
+        }
     }
 
+
+    internal class ParametersObject
+    {
+        // KMAPI
+        internal IntPtr kmapi;
+        internal int index = 11;
+        internal ParametersObject(IntPtr _kmapi, int _index)
+        {
+            kmapi = _kmapi;
+            index = _index;
+
+        }
+    }
 }
