@@ -342,6 +342,20 @@ namespace testnet
         //execute a command and wait for response
         private void btnExec_Click(object sender, RoutedEventArgs e)
         {
+            executeOneTime();
+        }
+
+        private void executeOneTime()
+        {
+            //Ensure thread safe
+            if (!this.Dispatcher.CheckAccess())
+            {
+                this.Dispatcher.Invoke((Action)delegate
+                {
+                    executeOneTime();
+                });
+                return;
+            }
             if (kmapi != IntPtr.Zero)
             {
                 int buffsize = MSG_LEN;
@@ -484,6 +498,7 @@ namespace testnet
         private void AddToLogTextBox(string msg)
         {
             edtlog.Text += msg;
+            edtlog.ScrollToEnd();
         }
 
         int InstenceCounter = 1;
@@ -513,6 +528,40 @@ namespace testnet
 
             InstenceWindow iWindow = new InstenceWindow(parametersObject);
             iWindow.ShowDialog();
+        }
+
+        bool stopLoop = true;
+        int loopDelyTime = 100;
+        private void BtnContinueExec_Click(object sender, RoutedEventArgs e)
+        {
+            stopLoop = false;
+            runInThread();
+        }
+
+        private void runInThread()
+        {
+             
+            Thread runContThread = new Thread(runContinue); // Do the calculation to find application cycle
+            runContThread.Name = "runContinue";
+            //ProcessInfoThread.Priority = ThreadPriority.AboveNormal;
+            runContThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+            runContThread.IsBackground = true; //Mar 2 2016: Ensure thread stop on exit.
+            runContThread.Start();
+
+        }
+
+        private void runContinue()
+        {
+            while (!stopLoop)
+            {
+                executeOneTime();
+                Thread.Sleep(loopDelyTime);
+            }
+        }
+
+        private void BtnStop_Click(object sender, RoutedEventArgs e)
+        {
+            stopLoop = true;
         }
     }
 

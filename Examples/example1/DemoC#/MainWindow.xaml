@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:testnet"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="523">
+        Title="Motion API Test" Height="650" Width="523">
     <Grid>
         <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="424,31,0,0" VerticalAlignment="Top" Width="76" Click="btnConnect_Click" TabIndex="2"/>
         <Label x:Name="label" Content="IP:" HorizontalAlignment="Left" Margin="49,25,0,0" VerticalAlignment="Top"/>
@@ -15,7 +15,7 @@
         <Button x:Name="btnSend" Content="Send" HorizontalAlignment="Left" Margin="424,149,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.48,1.983" Click="btnSend_Click"/>
         <Grid>
             <Button x:Name="btnConnect1" Content="Connect" HorizontalAlignment="Left" Margin="424,31,0,0" VerticalAlignment="Top" Width="76" Click="btnConnect_Click" TabIndex="2"/>
-            <TextBox x:Name="edtIP" HorizontalAlignment="Left" Height="22" Margin="30,29,0,0" TextWrapping="Wrap" Text="10.0.0.15" VerticalAlignment="Top" Width="137" TabIndex="0"/>
+            <TextBox x:Name="edtIP" HorizontalAlignment="Left" Height="22" Margin="30,29,0,0" TextWrapping="Wrap" Text="10.155.151.65" VerticalAlignment="Top" Width="137" TabIndex="0"/>
             <TextBox x:Name="edtPort" HorizontalAlignment="Left" Height="22" Margin="226,29,0,0" TextWrapping="Wrap" Text="4001" VerticalAlignment="Top" Width="120" TabIndex="1"/>
             <Label x:Name="label2" Content="IP:" HorizontalAlignment="Left" Margin="9,25,0,0" VerticalAlignment="Top"/>
             <Label x:Name="label3" Content="Port:" HorizontalAlignment="Left" Margin="193,25,0,0" VerticalAlignment="Top"/>
@@ -23,7 +23,7 @@
             <TextBox x:Name="edtCommand" HorizontalAlignment="Left" Height="22" Margin="8,116,0,0" TextWrapping="Wrap" Text="?ver" VerticalAlignment="Top" Width="406" TabIndex="0"/>
             <Button x:Name="btnAuthenticate" Content="Authenticate" HorizontalAlignment="Left" Margin="316,88,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.48,1.983" Click="btnAuthenticate_Click"/>
             <Button x:Name="btnLastError" Content="Get Last Error" HorizontalAlignment="Left" Margin="401,88,0,0" VerticalAlignment="Top" Width="98" RenderTransformOrigin="0.48,1.983" Click="btnLastError_Click" />
-            <TextBox x:Name="edtlog" HorizontalAlignment="Left" Height="334" Margin="7,196,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="492" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
+            <TextBox x:Name="edtlog" HorizontalAlignment="Left" Height="334" Margin="7,196,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="492" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>
             <Button x:Name="btnDetect" Content="Detect Devices" HorizontalAlignment="Left" Margin="8,77,0,0" VerticalAlignment="Top" Width="111" Click="btnDetect_Click"/>
             <Button x:Name="btnUpload" Content="Upload File to MC
                     ..." HorizontalAlignment="Left" Margin="12,145,0,0" VerticalAlignment="Top" Width="121" Click="btnUpload_Click"/>
@@ -31,6 +31,8 @@
             <Button x:Name="btnDisconnect" Content="Disconnect" HorizontalAlignment="Left" Margin="424,62,0,0" VerticalAlignment="Top" Width="76" Click="btnDisconnect_Click" TabIndex="2"/>
             <Button x:Name="btnRunThread" Content="Run additional thread" HorizontalAlignment="Left" Margin="12,172,0,0" VerticalAlignment="Top" Width="121" Click="btnRunThread_Click"/>
             <Label x:Name="lblProgVer" Content="Version Unknown" HorizontalAlignment="Left" Margin="10,538,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="btnContinueExec" Content="Continue Exe." HorizontalAlignment="Left" Margin="423,172,0,0" VerticalAlignment="Top" Width="75" Click="BtnContinueExec_Click"/>
+            <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="339,172,0,0" VerticalAlignment="Top" Width="75" Click="BtnStop_Click"/>
 
         </Grid>
 
