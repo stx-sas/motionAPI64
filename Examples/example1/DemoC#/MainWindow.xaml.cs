@@ -344,7 +344,7 @@ namespace testnet
         {
             executeOneTime();
         }
-
+        int lineNumber = 0;
         private void executeOneTime()
         {
             //Ensure thread safe
@@ -366,6 +366,14 @@ namespace testnet
 
                 if (!ProcessResult(ret))
                     return;
+
+
+                if (lineNumber++ > 1000)
+                {
+                    tbLogBox.Text = "";
+                    lineNumber = 0;
+                }
+
 
                 AddToLogTextBox(result.ToString());
                 if (propmtRecived)
@@ -454,7 +462,7 @@ namespace testnet
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            edtlog.Text = "";
+            tbLogBox.Text = "";
         }
 
         private void btnDisconnect_Click(object sender, RoutedEventArgs e)
@@ -497,8 +505,8 @@ namespace testnet
         }
         private void AddToLogTextBox(string msg)
         {
-            edtlog.Text += msg;
-            edtlog.ScrollToEnd();
+            tbLogBox.Text += msg;
+            tbLogBox.ScrollToEnd();
         }
 
         int InstenceCounter = 1;
@@ -534,6 +542,15 @@ namespace testnet
         int loopDelyTime = 100;
         private void BtnContinueExec_Click(object sender, RoutedEventArgs e)
         {
+            //get options from GUI
+            if (!int.TryParse(tbDelay.Text, out loopDelyTime))
+            {
+                loopDelyTime = 100;
+                tbDelay.Text = "100";
+            }
+
+
+
             stopLoop = false;
             runInThread();
         }
@@ -552,6 +569,7 @@ namespace testnet
 
         private void runContinue()
         {
+           
             while (!stopLoop)
             {
                 executeOneTime();
