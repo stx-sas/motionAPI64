@@ -232,6 +232,8 @@ namespace testnet
         IntPtr kmapi;
         bool propmtRecived;
         const int MSG_LEN = 1024 * 4;
+        static IntPtr pDll = IntPtr.Zero;
+        static int instenceCounter = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -240,11 +242,15 @@ namespace testnet
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             string productVersion = assembly.GetName().Version.ToString();
             lblProgVer.Content = "Version: " + productVersion;
+            if(instenceCounter++ > 0)
+                lblProgVer.Content += " Instence " + instenceCounter;
 
 
             // initalize KMAPI
             // you must load the KMAPI.dll in order to call methods
-            IntPtr pDll = NativeMethods.LoadLibrary(@"KMApi.dll");
+            if (pDll == IntPtr.Zero)
+                pDll = NativeMethods.LoadLibrary(@"KMApi.dll");
+
             if (pDll == IntPtr.Zero)
             {
                 throw new Win32Exception(Marshal.GetLastWin32Error());
@@ -534,7 +540,7 @@ namespace testnet
             ParametersObject parametersObject = null; 
             try { parametersObject = (ParametersObject)paramsObj; } catch { }
 
-            InstenceWindow iWindow = new InstenceWindow(parametersObject);
+            MainWindow iWindow = new MainWindow();
             iWindow.ShowDialog();
         }
 

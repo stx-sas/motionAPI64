@@ -70,7 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="InstenceWindow.xaml">
+    <Page Include="InstenceWindow_old.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -82,8 +82,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="InstenceWindow.xaml.cs">
-      <DependentUpon>InstenceWindow.xaml</DependentUpon>
+    <Compile Include="InstenceWindow_old.xaml.cs">
+      <DependentUpon>InstenceWindow_old.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
