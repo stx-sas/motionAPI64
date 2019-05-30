@@ -249,7 +249,10 @@ namespace testnet
             // initalize KMAPI
             // you must load the KMAPI.dll in order to call methods
             if (pDll == IntPtr.Zero)
+            {
                 pDll = NativeMethods.LoadLibrary(@"KMApi.dll");
+                //pDll = NativeMethods.LoadLibrary(@"c:\GIT\controlstudio\controlStudio\KMApi\Win32\Debug\KMApi.dll");
+            }
 
             if (pDll == IntPtr.Zero)
             {
@@ -345,6 +348,8 @@ namespace testnet
             }
         }
 
+        int allowedTimeOut = 200; // ms
+
         //execute a command and wait for response
         private void btnExec_Click(object sender, RoutedEventArgs e)
         {
@@ -367,8 +372,21 @@ namespace testnet
                 int buffsize = MSG_LEN;
                 StringBuilder result = new StringBuilder(buffsize);
                 propmtRecived = false;
+
+                DateTime start = DateTime.Now;
                 //execute a command and wait for response
                 int ret = NativeMethods.ExecCommand(kmapi, edtCommand.Text, result, buffsize);
+
+                DateTime end = DateTime.Now;
+                Duration duration = end - start;
+                if(duration.TimeSpan.TotalMilliseconds > allowedTimeOut)
+                {
+                    MessageBox.Show("Duration was " + duration.TimeSpan.TotalMilliseconds.ToString() + " ms\n" + 
+                                     "Timeout is " + allowedTimeOut.ToString());
+
+                    stopLoop = true;
+
+                }
 
                 if (!ProcessResult(ret))
                     return;
@@ -555,6 +573,11 @@ namespace testnet
                 tbDelay.Text = "100";
             }
 
+            if (!int.TryParse(tbTimeOut.Text, out allowedTimeOut))
+            {
+                allowedTimeOut = 200;
+                tbTimeOut.Text = "200";
+            }
 
 
             stopLoop = false;
