@@ -232,6 +232,8 @@ namespace testnet
         IntPtr kmapi;
         bool propmtRecived;
         const int MSG_LEN = 1024 * 4;
+        static IntPtr pDll = IntPtr.Zero;
+        static int instenceCounter = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -240,11 +242,18 @@ namespace testnet
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             string productVersion = assembly.GetName().Version.ToString();
             lblProgVer.Content = "Version: " + productVersion;
+            if(instenceCounter++ > 0)
+                lblProgVer.Content += " Instence " + instenceCounter;
 
 
             // initalize KMAPI
             // you must load the KMAPI.dll in order to call methods
-            IntPtr pDll = NativeMethods.LoadLibrary(@"KMApi.dll");
+            if (pDll == IntPtr.Zero)
+            {
+                pDll = NativeMethods.LoadLibrary(@"KMApi.dll");
+                //pDll = NativeMethods.LoadLibrary(@"c:\GIT\controlstudio\controlStudio\KMApi\Win32\Debug\KMApi.dll");
+            }
+
             if (pDll == IntPtr.Zero)
             {
                 throw new Win32Exception(Marshal.GetLastWin32Error());
@@ -339,19 +348,56 @@ namespace testnet
             }
         }
 
+        int allowedTimeOut = 200; // ms
+
         //execute a command and wait for response
         private void btnExec_Click(object sender, RoutedEventArgs e)
         {
+            executeOneTime();
+        }
+        int lineNumber = 0;
+        private void executeOneTime()
+        {
+            //Ensure thread safe
+            if (!this.Dispatcher.CheckAccess())
+            {
+                this.Dispatcher.Invoke((Action)delegate
+                {
+                    executeOneTime();
+                });
+                return;
+            }
             if (kmapi != IntPtr.Zero)
             {
                 int buffsize = MSG_LEN;
                 StringBuilder result = new StringBuilder(buffsize);
                 propmtRecived = false;
+
+                DateTime start = DateTime.Now;
                 //execute a command and wait for response
                 int ret = NativeMethods.ExecCommand(kmapi, edtCommand.Text, result, buffsize);
 
+                DateTime end = DateTime.Now;
+                Duration duration = end - start;
+                if(duration.TimeSpan.TotalMilliseconds > allowedTimeOut)
+                {
+                    MessageBox.Show("Duration was " + duration.TimeSpan.TotalMilliseconds.ToString() + " ms\n" + 
+                                     "Timeout is " + allowedTimeOut.ToString());
+
+                    stopLoop = true;
+
+                }
+
                 if (!ProcessResult(ret))
                     return;
+
+
+                if (lineNumber++ > 1000)
+                {
+                    tbLogBox.Text = "";
+                    lineNumber = 0;
+                }
+
 
                 AddToLogTextBox(result.ToString());
                 if (propmtRecived)
@@ -440,7 +486,7 @@ namespace testnet
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            edtlog.Text = "";
+            tbLogBox.Text = "";
         }
 
         private void btnDisconnect_Click(object sender, RoutedEventArgs e)
@@ -483,7 +529,8 @@ namespace testnet
         }
         private void AddToLogTextBox(string msg)
         {
-            edtlog.Text += msg;
+            tbLogBox.Text += msg;
+            tbLogBox.ScrollToEnd();
         }
 
         int InstenceCounter = 1;
@@ -511,8 +558,57 @@ namespace testnet
             ParametersObject parametersObject = null; 
             try { parametersObject = (ParametersObject)paramsObj; } catch { }
 
-            InstenceWindow iWindow = new InstenceWindow(parametersObject);
+            MainWindow iWindow = new MainWindow();
             iWindow.ShowDialog();
+        }
+
+        bool stopLoop = true;
+        int loopDelyTime = 100;
+        private void BtnContinueExec_Click(object sender, RoutedEventArgs e)
+        {
+            //get options from GUI
+            if (!int.TryParse(tbDelay.Text, out loopDelyTime))
+            {
+                loopDelyTime = 100;
+                tbDelay.Text = "100";
+            }
+
+            if (!int.TryParse(tbTimeOut.Text, out allowedTimeOut))
+            {
+                allowedTimeOut = 200;
+                tbTimeOut.Text = "200";
+            }
+
+
+            stopLoop = false;
+            runInThread();
+        }
+
+        private void runInThread()
+        {
+             
+            Thread runContThread = new Thread(runContinue); // Do the calculation to find application cycle
+            runContThread.Name = "runContinue";
+            //ProcessInfoThread.Priority = ThreadPriority.AboveNormal;
+            runContThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+            runContThread.IsBackground = true; //Mar 2 2016: Ensure thread stop on exit.
+            runContThread.Start();
+
+        }
+
+        private void runContinue()
+        {
+           
+            while (!stopLoop)
+            {
+                executeOneTime();
+                Thread.Sleep(loopDelyTime);
+            }
+        }
+
+        private void BtnStop_Click(object sender, RoutedEventArgs e)
+        {
+            stopLoop = true;
         }
     }
 
